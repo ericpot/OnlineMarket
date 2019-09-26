@@ -1,4 +1,4 @@
-create database OnlineMarket;
+create database if not exists OnlineMarket;
 use OnlineMarket;
 
 create table Users (

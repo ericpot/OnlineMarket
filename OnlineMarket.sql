@@ -1,7 +1,6 @@
 CREATE DATABASE IF NOT EXISTS OnlineMarket;
 use OnlineMarket;
 
-
 DROP TABLE IF EXISTS `Users`;
 CREATE TABLE IF NOT EXISTS `Users`;
 

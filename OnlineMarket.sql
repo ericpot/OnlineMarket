@@ -16,7 +16,7 @@ orderID INT AUTO_INCREMENT PRIMARY KEY,
 productID INT AUTO_INCREMENT NOT NULL UNIQUE, 
 qty INT NOT NULL, 
 CHECK (qty > 0), 
-FOREIGN KEY (orderID) REFERENCES Users (userID)
+FOREIGN KEY (orderID) REFERENCES Users (userID),
 FOREIGN KEY (productID) REFERENCES Products (productID)
 );
 
@@ -65,8 +65,8 @@ CREATE OrderDetails(
     orderID INT, 
     qty INT NOT NULL, 
     CHECK (qty > 0), 
-    FOREIGN KEY (productID) REFERENCES Products(productID)
-    FOREIGN KEY (orderID) REFERENCES Orders(orderID)
+    FOREIGN KEY (productID) REFERENCES Products(productID),
+    FOREIGN KEY (orderID) REFERENCES Orders(orderID),
     PRIMARY KEY (productID, orderID)
 );
 

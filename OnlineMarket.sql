@@ -11,7 +11,7 @@ create table Users (
     createdDate TIMESTAMP
 );
 
-CREATE TABLE Carts(
+CREATE TABLE Carts (
 orderID INT AUTO_INCREMENT PRIMARY KEY, 
 productID INT NOT NULL UNIQUE, 
 qty INT NOT NULL, 
@@ -20,7 +20,7 @@ FOREIGN KEY (orderID) REFERENCES Users (userID),
 FOREIGN KEY (productID) REFERENCES Products (productID)
 );
 
-CREATE TABLE Wishlist(
+CREATE TABLE Wishlist (
 userID INT, 
 productID INT,
 FOREIGN KEY (productID) REFERENCES Products (productID) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -29,14 +29,14 @@ PRIMARY KEY (userID, productID)
 );
 
 
-CREATE TABLE CustomerReview(
+CREATE TABLE CustomerReview (
 messageID INT AUTO_INCREMENT PRIMARY KEY, 
 sellerID INT, 
 message VARCHAR(255),
 FOREIGN KEY (sellerID) REFERENCES Users (userID)
 );
 
-CREATE TABLE Products(
+CREATE TABLE Products (
     productID INT AUTO_INCREMENT PRIMARY KEY, 
     sellerID INT  UNIQUE NOT NULL,
     productName VARCHAR (255) NOT NULL, 
@@ -51,7 +51,7 @@ CREATE TABLE Products(
     FOREIGN KEY (sellerID) REFERENCES Users (userID)
 );
 
-CREATE TABLE Orders(
+CREATE TABLE Orders (
     orderID INT AUTO_INCREMENT PRIMARY KEY, 
     userID INT UNIQUE NOT NULL, 
     paymentMode VARCHAR(60) NOT NULL, 
@@ -60,7 +60,7 @@ CREATE TABLE Orders(
     FOREIGN KEY (userID) REFERENCES Users (userID)
 );
 
-CREATE OrderDetails(
+CREATE TABLE OrderDetails (
     productID INT, 
     orderID INT, 
     qty INT NOT NULL, 

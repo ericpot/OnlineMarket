@@ -8,7 +8,7 @@ create table Users (
     email VARCHAR(255) NOT NULL UNIQUE, 
     username VARCHAR(60) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL, 
-    createdDate TIMESTAMP, 
+    createdDate TIMESTAMP
 );
 
 CREATE TABLE Carts(

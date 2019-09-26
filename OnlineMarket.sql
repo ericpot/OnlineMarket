@@ -13,7 +13,7 @@ create table Users (
 
 CREATE TABLE Carts(
 orderID INT AUTO_INCREMENT PRIMARY KEY, 
-productID INT AUTO_INCREMENT NOT NULL UNIQUE, 
+productID INT NOT NULL UNIQUE, 
 qty INT NOT NULL, 
 CHECK (qty > 0), 
 FOREIGN KEY (orderID) REFERENCES Users (userID),
@@ -31,18 +31,18 @@ PRIMARY KEY (userID, productID)
 
 CREATE TABLE CustomerReview(
 messageID INT AUTO_INCREMENT PRIMARY KEY, 
-sellerID INT AUTO_INCREMENT, 
+sellerID INT, 
 message VARCHAR(255),
 FOREIGN KEY (sellerID) REFERENCES Users (userID)
 );
 
 CREATE TABLE Products(
     productID INT AUTO_INCREMENT PRIMARY KEY, 
-    sellerID INT AUTO_INCREMENT UNIQUE NOT NULL,
+    sellerID INT  UNIQUE NOT NULL,
     productName VARCHAR (255) NOT NULL, 
     description VARCHAR(256) NOT NULL, 
     category VARCHAR(60) NOT NULL, 
-    qty INT auto_increment, 
+    qty INT, 
     price DOUBLE, 
     image VARCHAR (255) NOT NULL, 
     createdDate TIMESTAMP,

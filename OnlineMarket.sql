@@ -1,7 +1,11 @@
-create database if not exists OnlineMarket;
+CREATE DATABASE IF NOT EXISTS OnlineMarket;
 use OnlineMarket;
 
-create table Users (
+
+DROP TABLE IF EXISTS `Users`;
+CREATE TABLE IF NOT EXISTS `Users`;
+
+CREATE TABLE Users (
     userID INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL, 
     address VARCHAR(255) NOT NULL, 
@@ -10,6 +14,9 @@ create table Users (
     password VARCHAR(255) NOT NULL, 
     createdDate TIMESTAMP
 );
+
+DROP TABLE IF EXISTS `Carts`;
+CREATE TABLE IF NOT EXISTS `Carts`;
 
 CREATE TABLE Carts (
 orderID INT AUTO_INCREMENT PRIMARY KEY, 
@@ -20,6 +27,9 @@ FOREIGN KEY (orderID) REFERENCES Users (userID),
 FOREIGN KEY (productID) REFERENCES Products (productID)
 );
 
+DROP TABLE IF EXISTS `Wishlist`;
+CREATE TABLE IF NOT EXISTS `Wishlist`;
+
 CREATE TABLE Wishlist (
 userID INT, 
 productID INT,
@@ -28,6 +38,8 @@ FOREIGN KEY (userID) REFERENCES Users (UserID),
 PRIMARY KEY (userID, productID)
 );
 
+DROP TABLE IF EXISTS `CustomerReview`;
+CREATE TABLE IF NOT EXISTS `CustomerReview`;
 
 CREATE TABLE CustomerReview (
 messageID INT AUTO_INCREMENT PRIMARY KEY, 
@@ -35,6 +47,9 @@ sellerID INT,
 message VARCHAR(255),
 FOREIGN KEY (sellerID) REFERENCES Users (userID)
 );
+
+DROP TABLE IF EXISTS `Products`;
+CREATE TABLE IF NOT EXISTS `Products`;
 
 CREATE TABLE Products (
     productID INT AUTO_INCREMENT PRIMARY KEY, 
@@ -51,6 +66,9 @@ CREATE TABLE Products (
     FOREIGN KEY (sellerID) REFERENCES Users (userID)
 );
 
+DROP TABLE IF EXISTS `Orders`;
+CREATE TABLE IF NOT EXISTS `Orders`;
+
 CREATE TABLE Orders (
     orderID INT AUTO_INCREMENT PRIMARY KEY, 
     userID INT UNIQUE NOT NULL, 
@@ -59,6 +77,9 @@ CREATE TABLE Orders (
     createDate TIMESTAMP, 
     FOREIGN KEY (userID) REFERENCES Users (userID)
 );
+
+DROP TABLE IF EXISTS `OrderDetails`;
+CREATE TABLE IF NOT EXISTS `OrderDetails`;
 
 CREATE TABLE OrderDetails (
     productID INT, 

@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS `Products`;
 
 CREATE TABLE Products (
     productID INT AUTO_INCREMENT PRIMARY KEY, 
-    sellerID INT  UNIQUE NOT NULL,
+    sellerID INT  NOT NULL,
     productName VARCHAR (255) NOT NULL, 
     description VARCHAR(256) NOT NULL, 
     category VARCHAR(60) NOT NULL, 

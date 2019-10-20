@@ -109,6 +109,6 @@ mysqli_select_db($con, $database);
 }   
 ?>
 
-<div align="right"><p>Total Price: $<?php echo $total; ?></p></div>
+<div align="right"><p>Total Price: $<?php echo $total; ?></p>
 <a href="checkout.php"><button> CHECKOUT </button>
-<a href="index.php"><button>Continue Shopping </button>
+<a href="index.php"><button>Continue Shopping </button></div>

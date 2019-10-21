@@ -68,7 +68,7 @@ CREATE TABLE Orders (
     userID INT UNIQUE NOT NULL, 
     paymentMode VARCHAR(60) NOT NULL, 
     status VARCHAR(20) NOT NULL, 
-    createDate TIMESTAMP, 
+    createDate TIMESTAMP,
     FOREIGN KEY (userID) REFERENCES Users (userID)
 );
 

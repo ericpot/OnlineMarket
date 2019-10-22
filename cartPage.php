@@ -26,7 +26,7 @@ if ($conn->connect_error)
  
 echo "Connected successfully";
 
-$sql = "select Carts.productID, Products.productName, Products.description, Carts.qty, Products.price, Products.image from Carts inner join Products on Carts.productID = Products.productID";
+$sql = "select Carts.orderID, Products.productName, Products.description, Carts.qty, Products.price, Products.image from Carts inner join Products on Carts.productID = Products.productID";
 $result = $conn->query($sql);
 
 while($row = mysqli_fetch_array($result))
@@ -43,6 +43,8 @@ while($row = mysqli_fetch_array($result))
     $total += $row['Carts.qty'] * $row['Products.price'];
 
     ?>
+
+
     <!-- array of checkbox -->
     <tr><td><input type="checkbox" name="check[]" value="<?php echo $id; ?>" multiple/>
     <td><?php echo $name; ?></td><td><?php echo $desc ?></td><td><?php echo $price ?></td><td><input type="hidden" name="id[]" value="<?php echo $id;?>"/><input type="text" name="quantity[]" value="<?php echo $quantity;?>" size="5" /></td><td><img src="image/<?php echo $image ?>"width=50 height=50 /></td><td><?php echo $qprice ?></td>

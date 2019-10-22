@@ -66,7 +66,7 @@ DROP TABLE IF EXISTS `Orders`;
 CREATE TABLE Orders (
     orderID INT AUTO_INCREMENT PRIMARY KEY, 
     userID INT UNIQUE NOT NULL, 
-    paymentMode VARCHAR(60) NOT NULL, 
+    paymentMode VARCHAR(60), 
     status VARCHAR(20) NOT NULL, 
     createDate TIMESTAMP,
     FOREIGN KEY (userID) REFERENCES Users (userID)
@@ -79,6 +79,7 @@ CREATE TABLE OrderDetails (
     orderID INT, 
     qty INT NOT NULL, 
     CHECK (qty > 0), 
+    deliveryAddress VARCHAR (255) NOT NULL,
     FOREIGN KEY (productID) REFERENCES Products(productID),
     FOREIGN KEY (orderID) REFERENCES Orders(orderID),
     PRIMARY KEY (productID, orderID)

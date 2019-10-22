@@ -24,7 +24,7 @@ if ($conn->connect_error)
  
 echo "Connected successfully";
 
-$sql = "select Carts.productID, Products.productName, Products.description, Carts.qty, Products.price, Products.image from Carts inner join Products on Carts.productID = Products.productID";
+$sql = "select Carts.orderID, Products.productName, Products.description, Carts.qty, Products.price, Products.image from Carts inner join Products on Carts.productID = Products.productID";
 $result = $conn->query($sql);
 
 while($row = mysqli_fetch_array($result))
@@ -48,10 +48,10 @@ while($row = mysqli_fetch_array($result))
 }
 ?>
 <tr><th colspan=8>
-<form action="oayments.php" method="POST">
+<form action="payments.php" method="POST">
 <textarea name="addressbox" autocapitalize="on" autocomplete="off" 
 autocorrect="off" 
-class="textBox" maxlength="140">Type your delivery address</textarea>
+class="textBox" maxlength="140">Type your delivery address here</textarea>
 <input type="submit" value="I confirm all details are correct! Paynow!" name="submit">
 </form>
 </th></tr>
@@ -71,14 +71,14 @@ else
     
 //$sqlScript = "INSERT INTO forms (addressbox) VALUES ('$address')";
     
-    $query = "SELECT * FROM Cust;SELECT * FROM OldCust";
+    $query = "insert into Orders(userID,status) select orderID from Carts; insert into Orders (status) values (Pending); insert into orderDetails (deliveryAddress) values ('$address'); insert into orderDetails (productID) select (productID) from Products; insert into orderDetails (orderID) select (orderID) from Orders";
     mysqli_multi_query($con,$query);
 
     mysqli_close($con);
     
     ?>
 
-/*
+*/
 <div align="right"><p>Total Price: $<?php echo $total; ?></p>
 <a href="checkout.php"><button> I confirm that my details are correct!  </button>
 <a href="index.php"><button> Take me to Payment </button></div>

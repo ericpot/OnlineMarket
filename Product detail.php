@@ -22,55 +22,62 @@
 	<input class="MyButton" type="button" value="Go to wishlist!" onclick="window.location.href='https://en.wikipedia.org/wiki/Wish_list'" />
 	<input class="MyButton" type="button" value="Go to Shopping Cart" onclick="window.location.href='https://en.wikipedia.org/wiki/Shopping_cart'" />
 	</p>
-	
 	<h1><p align="Left">Product Details</p></h1>
 	
-	<!--- QUERY FOR PRODUCT DETAILS BEGIN--->
 	<?php
-		$sql = "SELECT sellerID, productName, description, price, createdDate FROM Products WHERE productID = " .$_POST['productname'];
-		echo "<b>SQL:  </b>".$sql."<br><br>";
-		$result = $conn->query($sql);
-
-		echo "<table border=\"1\" >
-		<tr>
-		<col width=\"15%\">
-		<col width=\"15%\">
-		<col width=\"40%\">
-		<col width=\"15%\">
-		<col width=\"15%\">
-		<th>Seller Name</th>
-		<th>Product Name</th>
-		<th>Product Description</th>
-		<th>Price</th>
-		<th>Date uploaded(YYYY-MM-DD)</th>
-		</tr>";
-		$row = $result->fetch_array();
-		echo "<tr>";		
-		echo "<td>" . $row[0] . "</td>";
-		echo '<td><a href="http://www.google.com">'. $row[1] ."</a></td>"; /*need to link to item page*/
-		echo "<td>" . $row[2] . "</td>"; 
-		echo "<td>" . "$" . number_format($row[3],2) . "</td>"; 
-		echo "<td>" . substr($row[4], 0, -9) . "</td>"; 
-		echo "</tr>"; 
-		echo "</table>";
+	
+	/*Query for adding into cart START here!*/
+	if(isset($_GET['AddtoCart'])){
+		$sql = "INSERT INTO Carts VALUES (4," .$_GET['productid'].", 1)";
 		
-		  
-		$result->close();	
+		if ($conn->query($sql) === TRUE) {
+		echo "Item is added to cart!<br>";
+		} else {
+		echo "Error: " . $sql . "<br>" . $conn->error. "<br>";
+		}
+	}
+	/*Query for adding into cart END here!*/
+	
+	/*Query for adding into wishlist START here!*/
+	if(isset($_GET['AddtoWishlist'])){
+		$sql = "INSERT INTO Wishlist VALUES (1," .$_GET['productid'].")";
+		
+		if ($conn->query($sql) === TRUE) {
+		echo "Item is added to wishlist!<br>";
+		} else {
+		echo "Error: " . $sql . "<br>" . $conn->error. "<br>";
+		}
+	}
+	/*Query for adding into wishlist END here!*/
+	
+	/*Query to show item details START here*/
+	$sql = "SELECT * FROM Products p WHERE productID = " .$_GET['productid'];
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+	// output data of each row
+	while($row = $result->fetch_assoc()) {
+		//echo "id: <br>" . $row["productName"]. " - Name: " . $row["price"]. " " . $row["description"]. "<br>";
+		echo "Product Name : " .$row["productName"]. "<br> Price : $" .$row["price"]. "<br> Description : " . $row["description"]. "<br>";
+		echo "<img src=\"https://i.ytimg.com/vi/bbIRfQ6K87M/maxresdefault.jpg\" alt = 'Product Image' width = '350' height = '350'>" ;
+	}
+	} else {
+	echo "0 results";
+	}
+	/*Query to show item details END here*/
+	
+	$conn->close();
 	?>
-	<!--- QUERY FOR PRODUCT DETAILS END--->	
-	<br>
-
-	<input class="MyButton" type="button" value="Add to cart" onclick="sayHello()" />
-
-<form method="post">
-    <button name="test">test</button>
-</form>
-
-    <?php
-    if(isset($_POST['test'])){
-      //do php stuff  
-    }
-    ?>
+	
+	<form action = "Product detail.php" method = "GET">
+		<input type="hidden" name="productid" value="<?php echo $_GET['productid']; ?>"/>
+		<input type = "submit" name = "AddtoCart" value = "Add to Cart!"/>
+	</form>
+	
+	<form action = "Product detail.php" method = "GET">
+		<input type="hidden" name="productid" value="<?php echo $_GET['productid']; ?>"/>
+		<input type = "submit" name = "AddtoWishlist" value = "Add to Wishlist!"/>
+	</form>
 
 	</body>
 </html>

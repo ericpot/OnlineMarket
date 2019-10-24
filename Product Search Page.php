@@ -22,7 +22,9 @@ session_start();
 	 
 	echo "Connected successfully";
 	?>
+
 	<p align = "right">
+	<input class="MyButton" type="button" value="Go to your page!" onclick="window.location.href='https://en.wikipedia.org/wiki/Page_(paper)'" />
 	<input class="MyButton" type="button" value="Go to wishlist!" onclick="window.location.href='https://en.wikipedia.org/wiki/Wish_list'" />
 	<input class="MyButton" type="button" value="Go to Shopping Cart" onclick="window.location.href='https://en.wikipedia.org/wiki/Shopping_cart'" />
 	</p>
@@ -32,25 +34,6 @@ session_start();
 <form>
 	<p align="center">
 	<input type="text" name="searchdsc" placeholder="What are you looking for?" size = "60">
-	
-
-	<!--- Options removed as I only consider search via Product name
-	<select name="Category"> 
-		<option disabled selected hidden>Select Category</option>
-		<option value="electronics">Electronics</option>
-		<option value="fashion">Fashion</option>
-		<option value="foodanddrinks">Food and drinks</option>
-		<option value="toyandgames">Toys and games</option>
-	</select>
-	
-	<select name="SearchBy"> 
-		<option disabled selected hidden>Search By</option>
-		<option value="SellerName">Seller name</option>
-		<option name="SearchBy" value="productName">Product Name</option>
-		<option name="SearchBy" value="description">Product Description</option>
-		
-	</select>
-	--->
 	<input type="submit" name="formSubmit" value="Search" >	
 </form>
 
@@ -60,7 +43,7 @@ session_start();
 	<?php
 	if(isset($_GET['formSubmit']) AND $_GET['searchdsc'] <> '')
 	{
-	  $sql = "SELECT u.name, p.productName, p.description, p.price, p.createdDate, p.productid FROM Products p, Users u WHERE p.sellerID = u.userID AND 
+	  $sql = "SELECT u.name, p.productName, p.description, p.price, p.createdDate, p.productid, u.userID FROM Products p, Users u WHERE p.sellerID = u.userID AND 
 	  p.productName like '%".$_GET['searchdsc']."%'
 	  ORDER BY p.createdDate DESC";
 	  echo "<b>SQL:  </b>".$sql."<br><br>";
@@ -79,22 +62,32 @@ session_start();
 	  <th>Product Description</th>
 	  <th>Price</th>
 	  <th>Date uploaded(YYYY-MM-DD)</th>
+	  <th>Wishlist</th>
 	  </tr>";
 
 	  while($row = $result->fetch_array()) {
 		echo "<tr>";		
-		echo "<td>" . $row[0] . "</td>";
+		//echo "<td>" . $row[0] . "</td>";
 		echo '<td>
-
-<form method="post" action="Product detail.php">
-<input type="hidden" name="productname" value='.$row[5].' />
-<input type="submit" name = "addToCart" value="'.$row[1].'" />
+		
+<form method="post" action="Product detail.php"> 
+<input type="hidden" name="sellername" value='.$row[6].' />
+<input type="submit" name = "Sellerpage" value="'.$row[0].'" />
 </form>
 		
-		</a></td>'; /*need to link to item page*/		
+		</td>'; /*need to link to seller page line 72*/
+		echo '<td>
+
+<form method="get" action="Product detail.php">
+<input type="hidden" name="productid" value='.$row[5].' />
+<input type="submit" name = "ProductDetails" value="'.$row[1].'" />
+</form>
+		
+		</td>'; 		
 		echo "<td>" . $row[2] . "</td>"; 
 		echo "<td>" . "$" . number_format($row[3],2) . "</td>"; 
 		echo "<td>" . substr($row[4], 0, -9) . "</td>"; 
+		echo "<td><input class=\"MyButton\" type=\"button\" value=\"Add to wishlist!\" onclick=\"window.location.href='https://en.wikipedia.org/wiki/Page_(paper)'\" /></td>"; 
 		echo "</tr>"; 
 	  }
 	  echo "</table>";
@@ -106,15 +99,29 @@ session_start();
 	<!--- QUERY FOR SEARCH END--->
 	
 	</body>
+
 <style>
-	input[name = addToCart]{
+
+	input[name = ProductDetails]{
 	padding: 0;
 	border: none;
 	background: none;
 	cursor: pointer;
 	}
-	input[name = addToCart]:hover{
+	input[name = ProductDetails]:hover{
 	background-color: yellow;
+	color : red;
+	}
+	
+	input[name = Sellerpage]{
+	padding: 0;
+	border: none;
+	background: none;
+	cursor: pointer;
+	}
+	input[name = Sellerpage]:hover{
+	background-color: black;
+	color:white;
 	}
 </style>
 </html>
